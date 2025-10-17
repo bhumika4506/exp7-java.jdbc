@@ -1,0 +1,78 @@
+import java.util.*;
+
+class Product {
+    int id;
+    String name;
+    double price;
+    int qty;
+
+    Product(int id, String name, double price, int qty) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.qty = qty;
+    }
+}
+
+public class Main {   // ✅ Matches file name (Main.java)
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Product> list = new ArrayList<>();
+
+        while (true) {
+            System.out.println("\n--- Product Table Menu ---");
+            System.out.println("1. Create\n2. Read\n3. Update\n4. Delete\n5. Exit");
+            System.out.print("Enter choice: ");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1:
+                    System.out.print("Enter Product ID: ");
+                    int id = sc.nextInt();
+                    System.out.print("Enter Name: ");
+                    String name = sc.next();
+                    System.out.print("Enter Price: ");
+                    double price = sc.nextDouble();
+                    System.out.print("Enter Quantity: ");
+                    int qty = sc.nextInt();
+                    list.add(new Product(id, name, price, qty));
+                    System.out.println("✅ Product inserted successfully!");
+                    break;
+
+                case 2:
+                    System.out.println("\nProductID\tName\tPrice\tQty");
+                    for (Product p : list)
+                        System.out.println(p.id + "\t\t" + p.name + "\t" + p.price + "\t" + p.qty);
+                    break;
+
+                case 3:
+                    System.out.print("Enter ID to update: ");
+                    int uid = sc.nextInt();
+                    boolean found = false;
+                    for (Product p : list) {
+                        if (p.id == uid) {
+                            System.out.print("Enter new Price: ");
+                            p.price = sc.nextDouble();
+                            System.out.print("Enter new Qty: ");
+                            p.qty = sc.nextInt();
+                            System.out.println("✅ Product updated!");
+                            found = true;
+                        }
+                    }
+                    if (!found) System.out.println("❌ Product not found!");
+                    break;
+
+                case 4:
+                    System.out.print("Enter ID to delete: ");
+                    int did = sc.nextInt();
+                    list.removeIf(p -> p.id == did);
+                    System.out.println("🗑 Product deleted (if existed).");
+                    break;
+
+                case 5:
+                    System.out.println("👋 Exiting...");
+                    return;
+            }
+        }
+    }
+}
