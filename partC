@@ -1,0 +1,136 @@
+import java.util.*;
+
+// Model
+class Student {
+    int studentID;
+    String name;
+    String department;
+    int marks;
+
+    Student(int studentID, String name, String department, int marks) {
+        this.studentID = studentID;
+        this.name = name;
+        this.department = department;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return studentID + "\t" + name + "\t" + department + "\t" + marks;
+    }
+}
+
+// Controller
+class StudentController {
+    List<Student> students = new ArrayList<>();
+
+    void addStudent(Student s) {
+        students.add(s);
+        System.out.println("Student added successfully!");
+    }
+
+    void viewStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found!");
+            return;
+        }
+        System.out.println("ID\tName\tDepartment\tMarks");
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+
+    void updateStudent(int id, String name, String dept, int marks) {
+        for (Student s : students) {
+            if (s.studentID == id) {
+                s.name = name;
+                s.department = dept;
+                s.marks = marks;
+                System.out.println("Student updated successfully!");
+                return;
+            }
+        }
+        System.out.println("Student not found!");
+    }
+
+    void deleteStudent(int id) {
+        Iterator<Student> it = students.iterator();
+        while (it.hasNext()) {
+            Student s = it.next();
+            if (s.studentID == id) {
+                it.remove();
+                System.out.println("Student deleted successfully!");
+                return;
+            }
+        }
+        System.out.println("Student not found!");
+    }
+}
+
+// View
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StudentController controller = new StudentController();
+        int choice;
+
+        do {
+            System.out.println("\n=== Student Management Menu ===");
+            System.out.println("1. Add Student");
+            System.out.println("2. View All Students");
+            System.out.println("3. Update Student");
+            System.out.println("4. Delete Student");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Department: ");
+                    String dept = sc.nextLine();
+                    System.out.print("Enter Marks: ");
+                    int marks = sc.nextInt();
+                    controller.addStudent(new Student(id, name, dept, marks));
+                    break;
+
+                case 2:
+                    controller.viewStudents();
+                    break;
+
+                case 3:
+                    System.out.print("Enter ID to update: ");
+                    int updateId = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter New Name: ");
+                    String newName = sc.nextLine();
+                    System.out.print("Enter New Department: ");
+                    String newDept = sc.nextLine();
+                    System.out.print("Enter New Marks: ");
+                    int newMarks = sc.nextInt();
+                    controller.updateStudent(updateId, newName, newDept, newMarks);
+                    break;
+
+                case 4:
+                    System.out.print("Enter ID to delete: ");
+                    int deleteId = sc.nextInt();
+                    controller.deleteStudent(deleteId);
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        } while (choice != 5);
+
+        sc.close();
+    }
+}
