@@ -1,0 +1,14 @@
+ // Simulated JDBC Example - Fetch Data
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Connecting to MySQL Database...");
+        System.out.println("Connection successful!");
+
+        System.out.println("\nFetching data from Employee table:");
+        System.out.println("EmpID\tName\tSalary");
+        System.out.println("101\tAmit\t50000");
+        System.out.println("102\tNeha\t60000");
+        System.out.println("103\tRahul\t55000");
+        System.out.println("\nData fetched successfully!");
+    }
+}
